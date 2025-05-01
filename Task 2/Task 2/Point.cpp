@@ -3,9 +3,9 @@
 #include "Point.h"
 
 /**
- * @brief ќператор сравнени¤ двух точек на равенство.
- * @param point1 ѕерва¤ точка дл¤ сравнени¤.
- * @param point2 ¬тора¤ точка дл¤ сравнени¤.
+ * @brief оператор сравнения двух точек на равенство.
+ * @param point1 первая точка для сравнения.
+ * @param point2 вторая точка дл¤ сравнения.
  * @return true если точки равны, false в противном случае.
  */
 bool operator==(const Point& point1, const Point& point2)
@@ -15,9 +15,9 @@ bool operator==(const Point& point1, const Point& point2)
 }
 
 /**
- * @brief ќператор сравнени¤ двух точек на неравенство.
- * @param point1 ѕерва¤ точка дл¤ сравнени¤.
- * @param point2 ¬тора¤ точка дл¤ сравнени¤.
+ * @brief оператор сравнения двух точек на неравенство.
+ * @param point1 первая точка дл¤ сравнения.
+ * @param point2 вторая точка дл¤ сравнения.
  * @return true если точки не равны, false в противном случае.
  */
 bool operator!=(const Point& point1, const Point& point2)
