@@ -3,39 +3,58 @@
 #include "Point.h"
 #include "Square.h"
 
-double getCoordinate(std::string message);
+/**
+ * @brief Получает координаты точки от пользователя.
+ * @param pointName Название точки для отображения в приглашении.
+ * @return Объект Point с введёнными координатами.
+ * @throw std::invalid_argument Если введены некорректные координаты.
+ */
+Point getPoint(const std::string& pointName);
 
+/**
+ * @brief Основная функция программы.
+ * Запрашивает координаты четырёх точек, создаёт квадрат и выводит его свойства.
+ * @return 0 при успешном выполнении, 1 при ошибке.
+ */
 int main()
 {
     setlocale(LC_ALL, "Russian");
-   
-    auto x = getCoordinate("Введите координату x: ");
-    auto y = getCoordinate("Введите координату y: ");
-    Point point1(x, y);
+    try {
+        Point p1 = getPoint("1");
+        Point p2 = getPoint("2");
+        Point p3 = getPoint("3");
+        Point p4 = getPoint("4");
 
-    x = getCoordinate("Введите координату x: ");
-    y = getCoordinate("Введите координату y: ");
-    Point point2(x, y);
+        Square square(p1, p2, p3, p4);
 
-    x = getCoordinate("Введите координату x: ");
-    y = getCoordinate("Введите координату y: ");
-    Point point3(x, y);
+        square.printPoints();
+        std::cout << "Периметр: " << square.getPerimeter() << std::endl;
+        std::cout << "Площадь: " << square.getArea() << std::endl;
+    }
+    catch (const std::exception& e) {
+        std::cerr << "Ошибка: " << e.what() << std::endl;
+        return 1;
+    }
 
-    Square square(point1, point2, point3);
-    std::cout << "Периметр квадрата равен " << square.getPerimeter() << std::endl;
-    std::cout << "Площадь квадрата равна " << square.getArea() << std::endl;
-    
     return 0;
 }
 
-double getCoordinate(std::string message)
+Point getPoint(const std::string& pointName)
 {
-    std::cout << message;
-    double coordinate = 0.0;
-    std::cin >> coordinate;
-    if (std::cin.fail())
-    {
-        throw std::invalid_argument("Введено некорректное значение");
+    std::cout << "Введите координаты точки " << pointName << ":\n";
+    std::cout << "x: ";
+    double x;
+    std::cin >> x;
+    if (std::cin.fail()) {
+        throw std::invalid_argument("Некорректное значение x");
     }
-    return coordinate;
+
+    std::cout << "y: ";
+    double y;
+    std::cin >> y;
+    if (std::cin.fail()) {
+        throw std::invalid_argument("Некорректное значение y");
+    }
+
+    return Point(x, y);
 }

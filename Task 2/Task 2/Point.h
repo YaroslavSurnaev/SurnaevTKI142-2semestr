@@ -1,5 +1,8 @@
 #pragma once
 
+/**
+ * @brief  ласс, представл€ющий точку в двумерном пространстве.
+ */
 class Point
 {
 private:
