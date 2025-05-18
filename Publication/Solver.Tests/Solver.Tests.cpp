@@ -1,4 +1,4 @@
-#include "CppUnitTest.h"
+п»ї#include "CppUnitTest.h"
 #include "../Solver/Book.h"
 #include "../Solver/City.h"
 #include "../Solver/Person.h"
@@ -14,13 +14,13 @@ namespace SolverTests
         TEST_METHOD(BookCreationTest)
         {
             City::initCities();
-            std::vector<Person> authors = { Person("Иван", "Иванов") };
-            Publisher publisher("Издательство", City("Москва"));
-            Person editor("Петр", "Петров");
+            std::vector<Person> authors = { Person("РРІР°РЅ", "РРІР°РЅРѕРІ") };
+            Publisher publisher("РР·РґР°С‚РµР»СЊСЃС‚РІРѕ", City("РњРѕСЃРєРІР°"));
+            Person editor("РџРµС‚СЂ", "РџРµС‚СЂРѕРІ");
 
-            Book book(authors, "Тестовая книга", 2023, publisher, editor);
+            Book book(authors, "РўРµСЃС‚РѕРІР°СЏ РєРЅРёРіР°", 2023, publisher, editor);
 
-            Assert::IsTrue(book.ToString().find("Тестовая книга") != std::string::npos);
+            Assert::IsTrue(book.ToString().find("РўРµСЃС‚РѕРІР°СЏ РєРЅРёРіР°") != std::string::npos);
         }
     };
 }
