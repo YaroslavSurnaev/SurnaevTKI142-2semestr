@@ -3,6 +3,10 @@
 #include "../Solver/Book.h"
 #include "../Solver/City.h"
 
+/**
+* @brief Основная функция программы.
+* @return 0 при успешном выполнении, 1 при ошибке.
+*/
 int main() {
     City::initCities();
     setlocale(LC_ALL, "Russian");
