@@ -9,19 +9,12 @@
 */
 class City {
 private:
-    static std::set<std::string> availableCities;
     std::string name;
 
 public:
     /**
-     * @brief Инициализирует список доступных городов.
-     */
-    static void initCities();
-
-    /**
      * @brief Конструктор города.
      * @param cityName Название города.
-     * @throws std::invalid_argument Если город не найден в списке доступных.
      */
     City(const std::string& cityName);
 

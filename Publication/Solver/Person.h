@@ -10,26 +10,18 @@ class Person {
 private:
     std::string firstName;
     std::string lastName;
-    std::string middleName;
-    std::string prefix;
-    std::string suffix;
 
 public:
     /**
      * @brief Конструктор персоны.
      * @param first Имя.
      * @param last Фамилия.
-     * @param middle Отчество (по умолчанию "").
-     * @param pref Префикс (по умолчанию "").
-     * @param suff Суффикс (по умолчанию "").
      */
-    Person(const std::string& first, const std::string& last,
-        const std::string& middle = "", const std::string& pref = "",
-        const std::string& suff = "");
+    Person(const std::string& first, const std::string& last);
 
     /**
      * @brief Возвращает полное имя персонажа.
-     * @return std::string Полное имя в формате "Префикс Имя Отчество Фамилия Суффикс".
+     * @return std::string Полное имя в формате "Имя Фамилия".
      */
     std::string getFullName() const;
 
