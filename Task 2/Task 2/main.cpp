@@ -12,6 +12,14 @@
 Point getPoint(const std::string& pointName);
 
 /**
+ * @brief Запрашивает и проверяет ввод числовой координаты с клавиатуры
+ * @param coordinateName Приглашение для ввода, которое увидит пользователь
+ * @return Введённое пользователем число типа double
+ * @throw std::invalid_argument Если ввод не является числом или произошла ошибка чтения
+ */
+double getCoordinate(const std::string& coordinateName);
+
+/**
  * @brief Основная функция программы.
  * Запрашивает координаты четырёх точек, создаёт квадрат и выводит его свойства.
  * @return 0 при успешном выполнении, 1 при ошибке.
@@ -20,12 +28,13 @@ int main()
 {
     setlocale(LC_ALL, "Russian");
     try {
-        Point p1 = getPoint("1");
-        Point p2 = getPoint("2");
-        Point p3 = getPoint("3");
-        Point p4 = getPoint("4");
+        std::cout << "Введите координаты трех точек квадрата:\n";
 
-        Square square(p1, p2, p3, p4);
+        Point point1 = getPoint("1");
+        Point point2 = getPoint("2");
+        Point point3 = getPoint("3");
+
+        Square square = Square(point1, point2, point3);
 
         square.printPoints();
         std::cout << "Периметр: " << square.getPerimeter() << std::endl;
@@ -41,20 +50,19 @@ int main()
 
 Point getPoint(const std::string& pointName)
 {
-    std::cout << "Введите координаты точки " << pointName << ":\n";
-    std::cout << "x: ";
-    double x;
-    std::cin >> x;
-    if (std::cin.fail()) {
-        throw std::invalid_argument("Некорректное значение x");
-    }
-
-    std::cout << "y: ";
-    double y;
-    std::cin >> y;
-    if (std::cin.fail()) {
-        throw std::invalid_argument("Некорректное значение y");
-    }
-
+    std::cout << "Точка " << pointName << ":\n";
+    double x = getCoordinate("x");
+    double y = getCoordinate("y");
     return Point(x, y);
+}
+
+double getCoordinate(const std::string& coordinateName)
+{
+    std::cout << coordinateName << ": ";
+    double value;
+    std::cin >> value;
+    if (std::cin.fail()) {
+        throw std::invalid_argument("Некорректный ввод координаты " + coordinateName);
+    }
+    return value;
 }

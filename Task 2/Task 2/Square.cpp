@@ -2,27 +2,61 @@
 #include <stdexcept>
 #include <cmath>
 #include <algorithm>
+#include <limits>
 #include "Square.h"
 
 /**
- * @brief Конструктор квадрата по четырём точкам.
+ * @brief Конструктор квадрата по трём точкам.
  * @param p1 Первая точка квадрата.
  * @param p2 Вторая точка квадрата.
  * @param p3 Третья точка квадрата.
- * @param p4 Четвёртая точка квадрата.
- * @throw std::logic_error Если точки не образуют квадрат или совпадают.
  */
-Square::Square(const Point& p1, const Point& p2, const Point& p3, const Point& p4)
-    : point1(p1), point2(p2), point3(p3), point4(p4)
+Square::Square(const Point& p1, const Point& p2, const Point& p3)
+    : point1(p1), point2(p2), point3(p3)
+{
+    point4 = calculateFourthPoint();
+    validateSquare();
+}
+
+/**
+* @brief Проверяет, образуют ли точки корректный квадрат
+* @throw std::invalid_argument Если точки не образуют квадрат
+*/
+void Square::validateSquare()
 {
     if (point1 == point2 || point1 == point3 || point1 == point4 ||
-        point2 == point3 || point2 == point4 || point3 == point4) {
-        throw std::logic_error("Все точки должны быть разными!");
+        point2 == point3 || point2 == point4 || point3 == point4)
+    {
+        throw std::invalid_argument("Точки квадрата должны быть разными");
     }
 
-    validateSquare();
+    // Вычисляем длины сторон и диагоналей
+    double side1 = calculateDistance(point1, point2);
+    double side2 = calculateDistance(point2, point3);
+    double diagonal = calculateDistance(point1, point3);
 
-    side = calculateDistance(point1, point2);
+    // Проверяем по теореме Пифагора (стороны равны и диагональ = сторона * √2)
+    if (std::abs(side1 - side2) > std::numeric_limits<double>::epsilon() ||
+        std::abs(diagonal - side1 * std::sqrt(2)) > std::numeric_limits<double>::epsilon())
+    {
+        throw std::invalid_argument("Точки не образуют квадрат");
+    }
+
+    sideLength = side1;
+}
+
+/**
+* @brief Вычисляет четвертую точку квадрата по трем заданным
+* @return Четвертая точка квадрата
+*/
+Point Square::calculateFourthPoint() const
+{
+    // Вычисляем вектор между точками 1 и 2
+    double dx = point2.getX() - point1.getX();
+    double dy = point2.getY() - point1.getY();
+
+    // Поворачиваем вектор на 90 градусов и добавляем к точке 3
+    return Point(point3.getX() - dy, point3.getY() + dx);
 }
 
 /**
@@ -33,41 +67,9 @@ Square::Square(const Point& p1, const Point& p2, const Point& p3, const Point& p
 */
 double Square::calculateDistance(const Point& p1, const Point& p2) const
 {
-    return sqrt(pow(p1.getX() - p2.getX(), 2) + pow(p1.getY() - p2.getY(), 2));
-}
-
-/**
-* @brief Проверяет, образуют ли точки корректный квадрат
-* @throw std::logic_error Если точки не образуют квадрат
-*/
-void Square::validateSquare() const
-{
-    double distances[6];
-    distances[0] = calculateDistance(point1, point2);
-    distances[1] = calculateDistance(point1, point3);
-    distances[2] = calculateDistance(point1, point4);
-    distances[3] = calculateDistance(point2, point3);
-    distances[4] = calculateDistance(point2, point4);
-    distances[5] = calculateDistance(point3, point4);
-
-    std::sort(distances, distances + 6);
-
-    const double epsilon = std::numeric_limits<double>::epsilon() * 100;
-
-    for (int i = 1; i < 4; ++i) {
-        if (std::abs(distances[0] - distances[i]) >= epsilon) {
-            throw std::logic_error("Точки не образуют квадрат: стороны не равны!");
-        }
-    }
-
-    if (std::abs(distances[4] - distances[5]) >= epsilon) {
-        throw std::logic_error("Точки не образуют квадрат: диагонали не равны!");
-    }
-
-    double expectedDiagonal = distances[0] * sqrt(2);
-    if (std::abs(distances[4] - expectedDiagonal) >= epsilon) {
-        throw std::logic_error("Точки не образуют квадрат: соотношение сторон и диагоналей неверное!");
-    }
+    double dx = p2.getX() - p1.getX();
+    double dy = p2.getY() - p1.getY();
+    return std::sqrt(dx * dx + dy * dy);
 }
 
 /**
@@ -76,7 +78,7 @@ void Square::validateSquare() const
  */
 double Square::getPerimeter() const
 {
-    return 4 * side;
+    return 4 * sideLength;
 }
 
 /**
@@ -85,7 +87,7 @@ double Square::getPerimeter() const
  */
 double Square::getArea() const
 {
-    return side * side;
+    return sideLength * sideLength;
 }
 
 /**
