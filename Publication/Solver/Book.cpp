@@ -2,8 +2,8 @@
 #include <iostream>
 
 Book::Book(const std::vector<Person>& auth, const std::string& t, int y,
-    const Publisher& pub, const Person& ed)
-    : authors(auth), title(t), year(y), publisher(pub), editor(ed) {}
+    const Publisher& pub)
+    : authors(auth), title(t), year(y), publisher(pub) {}
 
 std::string Book::ToString() const {
     std::ostringstream oss;
@@ -11,7 +11,7 @@ std::string Book::ToString() const {
     for (const auto& author : authors) {
         oss << author << "; ";
     }
-    oss << "\n" << publisher << "\nРедактор: " << editor;
+    oss << "\n" << publisher;
     return oss.str();
 }
 
@@ -20,12 +20,11 @@ Book Book::ReadFromStream(std::istream& is) {
     std::string title;
     int year;
     Publisher publisher("", City("Москва"));
-    Person editor("", "");
 
     std::cout << "Введите количество авторов: ";
     int authorCount;
     is >> authorCount;
-    for (int i = 0; i < authorCount; ++i) {
+    for (size_t i = 0; i < authorCount; ++i) {
         Person author("", "");
         std::cout << "Автор #" << i + 1 << ":\n";
         is >> author;
@@ -41,10 +40,7 @@ Book Book::ReadFromStream(std::istream& is) {
     std::cout << "Введите данные издательства:\n";
     is >> publisher;
 
-    std::cout << "Введите данные редактора:\n";
-    is >> editor;
-
-    return Book(authors, title, year, publisher, editor);
+    return Book(authors, title, year, publisher);
 }
 
 std::ostream& operator<<(std::ostream& os, const Book& book) {

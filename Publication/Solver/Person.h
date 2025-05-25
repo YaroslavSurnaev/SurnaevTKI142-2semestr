@@ -4,12 +4,12 @@
 
 /**
 * @class Person
-* @brief Класс, представляющий человека (автора или редактора).
+* @brief Класс, представляющий человека (автора).
 */
 class Person {
 private:
-    std::string firstName;
-    std::string lastName;
+    std::string firstName; ///< Имя.
+    std::string lastName; ///< Фамилия.
 
 public:
     /**

@@ -9,7 +9,7 @@
 */
 class City {
 private:
-    std::string name;
+    std::string name; ///< Название города.
 
 public:
     /**

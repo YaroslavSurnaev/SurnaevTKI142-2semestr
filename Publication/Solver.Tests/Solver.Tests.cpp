@@ -8,6 +8,9 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace SolverTests
 {
+    /**
+    * Корректность создания объекта City с допустимым названием.
+    */
     TEST_CLASS(CityTests)
     {
     public:
@@ -18,6 +21,9 @@ namespace SolverTests
         }
     };
 
+    /**
+    * Корректность формирования имени без отчества.
+    */
     TEST_CLASS(PersonTests)
     {
     public:
@@ -28,6 +34,9 @@ namespace SolverTests
         }
     };
 
+    /**
+    * Проверка строкового представления издательства (название + город).
+    */
     TEST_CLASS(PublisherTests)
     {
     public:
@@ -39,6 +48,9 @@ namespace SolverTests
         }
     };
 
+    /**
+    * Проверка вывода полной информации о книге (авторы, название, год и т.д.).
+    */
     TEST_CLASS(BookTests)
     {
     public:
@@ -46,18 +58,17 @@ namespace SolverTests
         {
             std::vector<Person> authors = { Person("Лев", "Толстой") };
             Publisher publisher("АСТ", City("Москва"));
-            Person editor("Иван", "Иванов");
 
-            Book book(authors, "Война и мир", 1869, publisher, editor);
+            Book book(authors, "Война и мир", 1869, publisher);
 
             std::string result = book.ToString();
             Assert::IsTrue(result.find("Книга: Война и мир") != std::string::npos);
             Assert::IsTrue(result.find("Год издания: 1869") != std::string::npos);
             Assert::IsTrue(result.find("Лев Толстой") != std::string::npos);
             Assert::IsTrue(result.find("Издательство: АСТ") != std::string::npos);
-            Assert::IsTrue(result.find("Редактор: Иван Иванов") != std::string::npos);
         }
 
+        // Имитация ввода данных из потока и проверка корректности.
         TEST_METHOD(TestBookReadFromStream)
         {
             std::istringstream input(
@@ -68,8 +79,6 @@ namespace SolverTests
                 "1866\n"   // Год издания
                 "Азбука\n" // Издательство
                 "Москва\n" // Город
-                "Петр\n"   // Имя редактора
-                "Петров\n" // Фамилия редактора
             );
 
             Book book = Book::ReadFromStream(input);

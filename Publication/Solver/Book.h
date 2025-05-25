@@ -12,11 +12,10 @@
  */
 class Book {
 private:
-    std::vector<Person> authors;
-    std::string title;
-    int year;
-    Publisher publisher;
-    Person editor;
+    std::vector<Person> authors; ///< Список авторов.
+    std::string title; ///< Название книги.
+    int year; ///< Год издания.
+    Publisher publisher; ///< Издательство.
 
 public:
     /**
@@ -25,15 +24,14 @@ public:
      * @param t Название.
      * @param y Год издания.
      * @param pub Издательство.
-     * @param ed Редактор.
      */
     Book(const std::vector<Person>& auth, const std::string& t, int y,
-        const Publisher& pub, const Person& ed);
+        const Publisher& pub);
 
     /**
      * @brief Сериализует книгу в строку.
      * @return std::string Информация о книге в формате:
-     *         "Книга: Название\nГод: Год\nАвторы: ...\nИздательство: ...\nРедактор: ...".
+     *         "Книга: Название\nГод: Год\nАвторы: ...\nИздательство: ...".
      */
     std::string ToString() const;
 

@@ -9,8 +9,8 @@
 */
 class Publisher {
 private:
-    std::string name;
-    City city;
+    std::string name; ///< Название издательства.
+    City city; ///< Город издательства.
 
 public:
     /**
