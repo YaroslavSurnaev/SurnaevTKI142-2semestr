@@ -9,7 +9,8 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 namespace SolverTests
 {
     /**
-    * Корректность создания объекта City с допустимым названием.
+    * @brief Тестирует функциональность класса City.
+    * @test TestCityInitialization - Проверяет корректность инициализации города.
     */
     TEST_CLASS(CityTests)
     {
@@ -22,7 +23,8 @@ namespace SolverTests
     };
 
     /**
-    * Корректность формирования имени без отчества.
+    * @brief Тестирует функциональность класса Person.
+    * @test TestPersonFull - Проверяет форматирование имени
     */
     TEST_CLASS(PersonTests)
     {
@@ -35,7 +37,8 @@ namespace SolverTests
     };
 
     /**
-    * Проверка строкового представления издательства (название + город).
+    * @brief Тестирует функциональность класса Publisher.
+    * @test TestPublisherToString - Проверяет строковое представление издательства.
     */
     TEST_CLASS(PublisherTests)
     {
@@ -49,7 +52,9 @@ namespace SolverTests
     };
 
     /**
-    * Проверка вывода полной информации о книге (авторы, название, год и т.д.).
+    * @brief Тестирует функциональность класса Book.
+    * @test TestBookToString - Проверяет полное строковое представление книги.
+    * @test TestBookReadFromStream - Тестирует чтение данных из потока ввода.
     */
     TEST_CLASS(BookTests)
     {
@@ -68,7 +73,6 @@ namespace SolverTests
             Assert::IsTrue(result.find("Издательство: АСТ") != std::string::npos);
         }
 
-        // Имитация ввода данных из потока и проверка корректности.
         TEST_METHOD(TestBookReadFromStream)
         {
             std::istringstream input(
