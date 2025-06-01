@@ -27,6 +27,63 @@ CircularList::~CircularList() {
     clear();
 }
 
+// Конструктор копирования
+CircularList::CircularList(const CircularList& other) : head(nullptr), tail(nullptr), size(0) {
+    if (other.head) {
+        Node* current = other.head;
+        do {
+            add(current->data);
+            current = current->next;
+        } while (current != other.head);
+    }
+}
+
+// Конструктор перемещения
+CircularList::CircularList(CircularList&& other) noexcept
+    : head(other.head), tail(other.tail), size(other.size) {
+    // Обнуляем исходный объект
+    other.head = nullptr;
+    other.tail = nullptr;
+    other.size = 0;
+}
+
+// Копирующее присваивание
+CircularList& CircularList::operator=(const CircularList& other) {
+    if (this != &other) {
+        // Очищаем текущее содержимое
+        clear();
+
+        // Копируем данные из other
+        if (other.head) {
+            Node* current = other.head;
+            do {
+                add(current->data);
+                current = current->next;
+            } while (current != other.head);
+        }
+    }
+    return *this;
+}
+
+// Перемещающее присваивание
+CircularList& CircularList::operator=(CircularList&& other) noexcept {
+    if (this != &other) {
+        // Освобождаем текущие ресурсы
+        clear();
+
+        // Перехватываем ресурсы
+        head = other.head;
+        tail = other.tail;
+        size = other.size;
+
+        // Обнуляем исходный объект
+        other.head = nullptr;
+        other.tail = nullptr;
+        other.size = 0;
+    }
+    return *this;
+}
+
 /**
  * @brief Добавляет элемент в конец списка
  * @param value Значение для добавления

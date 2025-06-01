@@ -6,26 +6,29 @@
  * @return 0 - успешное выполнение
  */
 int main() {
-    // Создание списка
-    CircularList list = { 1, 2, 3 };
-    std::cout << "Initial list: " << list.toString() << std::endl;
+    // Тестирование конструктора копирования
+    CircularList list1 = { 1, 2, 3 };
+    CircularList list2 = list1;  // Копирование
+    std::cout << "Original: " << list1.toString() << std::endl;
+    std::cout << "Copy: " << list2.toString() << std::endl;
 
-    // Добавление элементов
-    list << 4 << 5;
-    std::cout << "After adding: " << list.toString() << std::endl;
+    // Тестирование перемещающего конструктора
+    CircularList list3 = std::move(list1);
+    std::cout << "After move:" << std::endl;
+    std::cout << "Source: " << list1.toString() << std::endl;
+    std::cout << "Destination: " << list3.toString() << std::endl;
 
-    // Удаление элемента
-    list.remove(3);
-    std::cout << "After removal: " << list.toString() << std::endl;
+    // Тестирование копирующего присваивания
+    CircularList list4;
+    list4 = list3;
+    std::cout << "Copy assignment: " << list4.toString() << std::endl;
 
-    // Извлечение элемента
-    int val;
-    list >> val;
-    std::cout << "Extracted: " << val << std::endl;
-    std::cout << "After extraction: " << list.toString() << std::endl;
-
-    // Проверка на пустоту
-    std::cout << "Is empty? " << (list.isEmpty() ? "Yes" : "No") << std::endl;
+    // Тестирование перемещающего присваивания
+    CircularList list5;
+    list5 = std::move(list3);
+    std::cout << "Move assignment:" << std::endl;
+    std::cout << "Source: " << list3.toString() << std::endl;
+    std::cout << "Destination: " << list5.toString() << std::endl;
 
     return 0;
 }
